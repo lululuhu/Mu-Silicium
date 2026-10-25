@@ -12,6 +12,8 @@ jobs:
       - uses: actions/checkout@v7
         with:
           submodules: recursive
+      - name: Provision lemonades.dtb (clone kebab.dtb, same SM8250 SoC)
+        run: cp Resources/DTBs/kebab.dtb Resources/DTBs/lemonades.dtb
       - name: Build UEFI image
         run: bash ./setup_env.sh -p apt && ./build_uefi.py -d lemonades -r DEBUG -c -m 0
       - name: Upload UEFI boot image
