@@ -1,0 +1,22 @@
+name: Build UEFI for OnePlus 9R (lemonades)
+on:
+  push:
+    branches: ["lemonades-uefi"]
+  workflow_dispatch:
+env:
+  CI_BUILD: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+      - name: Build UEFI image
+        run: bash ./setup_env.sh -p apt && ./build_uefi.py -d lemonades -r DEBUG -c -m 0
+      - name: Upload UEFI boot image
+        uses: actions/upload-artifact@v7
+        with:
+          name: uefi-images
+          path: ./Mu-*
+          compression-level: 9
